@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(ConfigurationService.class)
 public class AgarioApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AgarioApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AgarioApplication.class, args);
+    }
 
 }

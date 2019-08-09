@@ -24,7 +24,6 @@ class Player {
         ctx.font = fontSize + "px Arial";
         ctx.textAlign = "center";
         ctx.fillText(this.name, x, y + fontSize / 3);
-        //ctx.fillText(this.name, x, y + this.size + fontSize);
     }
 }
 
@@ -51,23 +50,5 @@ class Camera {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-    }
-
-    update(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-class CurrentState {
-
-    constructor() {
-        this.players = [];
-        this.staticObjects = [];
-    }
-
-    update(players, staticObjects) {
-        this.players = players;
-        this.staticObjects = staticObjects;
     }
 }

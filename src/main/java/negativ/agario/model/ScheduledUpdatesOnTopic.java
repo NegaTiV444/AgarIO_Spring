@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @Component
 public class ScheduledUpdatesOnTopic {
 
-    //private long counter = 0;
-
     private ServerMessage message = new ServerMessage();
 
     @Autowired
@@ -54,6 +52,5 @@ public class ScheduledUpdatesOnTopic {
         message.setPlayers(currentState); //TODO do
         message.setStaticObjects(gameField.getStaticObjects());
         template.convertAndSend("/update", message);
-       // System.out.println("Message was sent " + counter++);
     }
 }
