@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
-public class ScheduledUpdatesOnTopic {
+public class UpdateScheduler {
 
     private ServerMessage message = new ServerMessage();
 
@@ -30,13 +30,13 @@ public class ScheduledUpdatesOnTopic {
     private GameField gameField;
 
     @Scheduled(fixedDelay = 1000)
-    private void generateFood() {
+    private void sendFoodState() {
         int difference = config.getGameField().getNumberOfStaticObjects() - gameField.getStaticObjects().size();
         for (int i = 0; i < difference; i++) {
             GameEntity gameEntity = new GameEntity();
             gameEntity.setColor(config.getPlayer().getAvailableColors()
                     .get(new Random().nextInt(config.getPlayer().getAvailableColors().size())));
-            gameEntity.setSize(5); //TODO move to properties
+            gameEntity.setSize(config.getGameField().getFoodSize());
             gameEntity.setX(new Random().nextInt(config.getGameField().getWidth()));
             gameEntity.setY(new Random().nextInt(config.getGameField().getHeight()));
             gameField.getStaticObjects().add(gameEntity);
@@ -44,12 +44,12 @@ public class ScheduledUpdatesOnTopic {
     }
 
     @Scheduled(fixedDelay = 15)
-    public void publishUpdates() {
+    public void sendPlayersState() {
         List<Player> currentState = new ArrayList<>(gameField.updateAndGet()
                 .stream()
-                .sorted(Comparator.comparingInt(Player::getScore))
+                .sorted(Comparator.comparingInt(Player::getSize))
                 .collect(Collectors.toList()));
-        message.setPlayers(currentState); //TODO do
+        message.setPlayers(currentState);
         message.setStaticObjects(gameField.getStaticObjects());
         template.convertAndSend("/update", message);
     }

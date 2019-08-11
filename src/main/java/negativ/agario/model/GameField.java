@@ -6,24 +6,28 @@ import negativ.agario.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class GameField {
 
-    private ConfigurationService configurationService;
+    private ConfigurationService config;
 
     @Autowired
-    private ScheduledUpdatesOnTopic scheduledUpdatesOnTopic;
+    private UpdateScheduler updateScheduler;
+
+    private GameLogicProvider gameLogicProvider;
 
     @Autowired
-    public GameField(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
+    public GameField(ConfigurationService configurationService, GameLogicProvider gameLogicProvider) {
+        this.config = configurationService;
         GAME_FIELD_WIDTH = configurationService.getGameField().getWidth();
         GAME_FIELD_HEIGHT = configurationService.getGameField().getHeight();
         availableColors = configurationService.getPlayer().getAvailableColors();
         speed = configurationService.getPlayer().getSpeed();
+        this.gameLogicProvider = gameLogicProvider;
     }
 
     private final int GAME_FIELD_WIDTH;
@@ -40,41 +44,36 @@ public class GameField {
     private List<GameEntity> staticObjects = new ArrayList<>();
     private Map<String, Player> players = new HashMap<>();
 
-    public List<GameEntity> getStaticObjects() {
-        return staticObjects;
-    }
-
     public void addPlayer(String name) {
         Player newPlayer = new Player();
         newPlayer.setColor(availableColors.get(new Random().nextInt(availableColors.size())));
-
         newPlayer.setName(name);
-
-        newPlayer.setSize(configurationService.getPlayer().getBasicSize());
-
-        newPlayer.setX(new Random().nextInt(GAME_FIELD_WIDTH - GAME_FIELD_WIDTH / 5 * 2) + GAME_FIELD_WIDTH / 5);
-        newPlayer.setY(new Random().nextInt(GAME_FIELD_HEIGHT - GAME_FIELD_HEIGHT / 5 * 2) + GAME_FIELD_HEIGHT / 5);
+        newPlayer.setSize(config.getPlayer().getBasicSize());
+        findSpawnPlace(newPlayer);
         players.put(newPlayer.getName(), newPlayer);
     }
 
-    private void findSpawnPlace(Player player) { //TODO do
+    private void findSpawnPlace(Player player) {
         Random random = new Random();
-        int x, y;
+        do {
+            player.setX(random.nextInt(GAME_FIELD_WIDTH - GAME_FIELD_WIDTH / 5 * 2) + GAME_FIELD_WIDTH / 5);
+            player.setY(random.nextInt(GAME_FIELD_HEIGHT - GAME_FIELD_HEIGHT / 5 * 2) + GAME_FIELD_HEIGHT / 5);
+        } while (players.values().stream().anyMatch(p -> gameLogicProvider.isNear(p, player.getX(), player.getY())));
     }
 
     public List<Player> updateAndGet() { //TODO Check time and choose the fastest way
         List<Player> currentState = new ArrayList<>(players
                 .values()
                 .stream()
-                .sorted(Comparator.comparingInt(Player::getScore).reversed())
+                .sorted(Comparator.comparingInt(Player::getSize).reversed())
                 .collect(Collectors.toList()));
         for (int i = 0; i < currentState.size(); i++) {
             Player firstPlayer = currentState.get(i);
             int j = i + 1;
             while (j < currentState.size()) {
                 Player secondPlayer = currentState.get(j);
-                if (firstPlayer.isNear(secondPlayer)) {
-                    firstPlayer.addPoints(secondPlayer.getScore() / 100);
+                if (gameLogicProvider.isNear(firstPlayer, secondPlayer.getX(), secondPlayer.getY())) {
+                    gameLogicProvider.eatPlayer(firstPlayer, secondPlayer);
                     players.remove(secondPlayer.getName());
                     currentState.remove(secondPlayer);
                 } else
@@ -83,8 +82,8 @@ public class GameField {
             j = 0;
             while (j < staticObjects.size()) {
                 GameEntity entity = staticObjects.get(j);
-                if (firstPlayer.isNear(entity)) {
-                    firstPlayer.addPoints(0.5f); //TODO add entity cost to properties
+                if (gameLogicProvider.isNear(firstPlayer, entity.getX(), entity.getY())) {
+                    gameLogicProvider.eatFood(firstPlayer);
                     staticObjects.remove(entity);
                 } else
                     j++;
@@ -95,5 +94,9 @@ public class GameField {
 
     public Map<String, Player> getPlayers() {
         return players;
+    }
+
+    public List<GameEntity> getStaticObjects() {
+        return staticObjects;
     }
 }

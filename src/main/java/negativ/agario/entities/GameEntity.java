@@ -6,7 +6,7 @@ import lombok.Data;
 public class GameEntity {
 
     private String color;
-    private float size;
+    private int size;
     private int x, y;
 
 }

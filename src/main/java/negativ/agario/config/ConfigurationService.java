@@ -21,12 +21,14 @@ public class ConfigurationService {
     public static class GameField {
         @NotNull
         private Integer height;
-
         @NotNull
         private Integer width;
-
         @NotNull
         private Integer numberOfStaticObjects;
+        @NotNull
+        private Integer foodCost;
+        @NotNull
+        private Integer foodSize;
     }
 
     @Data
