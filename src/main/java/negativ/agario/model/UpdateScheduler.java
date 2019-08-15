@@ -47,7 +47,7 @@ public class UpdateScheduler {
     public void sendPlayersState() {
         List<Player> currentState = new ArrayList<>(gameField.updateAndGet()
                 .stream()
-                .sorted(Comparator.comparingInt(Player::getSize))
+                .sorted(Comparator.comparingDouble(Player::getSize))
                 .collect(Collectors.toList()));
         message.setPlayers(currentState);
         message.setStaticObjects(gameField.getStaticObjects());

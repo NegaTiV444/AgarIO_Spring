@@ -26,9 +26,9 @@ public class ConfigurationService {
         @NotNull
         private Integer numberOfStaticObjects;
         @NotNull
-        private Integer foodCost;
+        private Float foodCost;
         @NotNull
-        private Integer foodSize;
+        private Float foodSize;
     }
 
     @Data
@@ -36,7 +36,7 @@ public class ConfigurationService {
         @NotNull
         private Float speed;
         @NotNull
-        private Integer basicSize;
+        private Float basicSize;
         @NotNull
         private Float growCoefficient;
         @NotEmpty

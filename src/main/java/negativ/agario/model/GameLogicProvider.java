@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 public class GameLogicProvider {
 
     private float growCoefficient;
+    private float foodCost;
 
     @Autowired
     private ConfigurationService config;
@@ -19,18 +20,20 @@ public class GameLogicProvider {
     @PostConstruct
     private void init() {
         growCoefficient = config.getPlayer().getGrowCoefficient();
+        foodCost = config.getGameField().getFoodCost();
     }
 
     public boolean isNear(GameEntity gameEntity, int x, int y) {
-        return ((Math.abs(gameEntity.getX() - x) < gameEntity.getSize() * 0.0075)
-                && (Math.abs(gameEntity.getY() - y) < gameEntity.getSize() * 0.0075));
+        return ((Math.abs(gameEntity.getX() - x) < gameEntity.getSize() * 0.75)
+                && (Math.abs(gameEntity.getY() - y) < gameEntity.getSize() * 0.75));
     }
 
     public void eatPlayer(Player player1, Player player2) {
-        player1.setSize(player1.getSize() + (int)(player2.getSize() * growCoefficient));
+        player1.setSize(player1.getSize() + (int) (player2.getSize() * growCoefficient));
     }
 
     public void eatFood(Player player) {
-        player.setSize(player.getSize() + config.getGameField().getFoodCost());
+        player.setSize(player.getSize() + foodCost);
     }
+
 }

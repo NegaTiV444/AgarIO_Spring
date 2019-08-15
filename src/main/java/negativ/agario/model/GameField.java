@@ -13,29 +13,29 @@ import java.util.stream.Collectors;
 @Service
 public class GameField {
 
+    @Autowired
     private ConfigurationService config;
 
     @Autowired
     private UpdateScheduler updateScheduler;
 
+    @Autowired
     private GameLogicProvider gameLogicProvider;
 
-    @Autowired
-    public GameField(ConfigurationService configurationService, GameLogicProvider gameLogicProvider) {
-        this.config = configurationService;
-        GAME_FIELD_WIDTH = configurationService.getGameField().getWidth();
-        GAME_FIELD_HEIGHT = configurationService.getGameField().getHeight();
-        availableColors = configurationService.getPlayer().getAvailableColors();
-        speed = configurationService.getPlayer().getSpeed();
-        this.gameLogicProvider = gameLogicProvider;
+    @PostConstruct
+    private void init() {
+        GAME_FIELD_WIDTH = config.getGameField().getWidth();
+        GAME_FIELD_HEIGHT = config.getGameField().getHeight();
+        availableColors = config.getPlayer().getAvailableColors();
+        speed = config.getPlayer().getSpeed();
     }
 
-    private final int GAME_FIELD_WIDTH;
-    private final int GAME_FIELD_HEIGHT;
+    private int GAME_FIELD_WIDTH;
+    private int GAME_FIELD_HEIGHT;
 
-    private final List<String> availableColors;
+    private List<String> availableColors;
 
-    private final float speed;
+    private float speed;
 
     public float getSpeed() {
         return speed;
@@ -65,7 +65,7 @@ public class GameField {
         List<Player> currentState = new ArrayList<>(players
                 .values()
                 .stream()
-                .sorted(Comparator.comparingInt(Player::getSize).reversed())
+                .sorted(Comparator.comparingDouble(Player::getSize).reversed())
                 .collect(Collectors.toList()));
         for (int i = 0; i < currentState.size(); i++) {
             Player firstPlayer = currentState.get(i);
