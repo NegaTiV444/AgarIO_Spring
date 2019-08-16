@@ -7,6 +7,6 @@ public class GameEntity {
 
     private String color;
     private float size;
-    private int x, y;
+    private double x, y;
 
 }

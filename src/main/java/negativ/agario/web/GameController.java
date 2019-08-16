@@ -43,12 +43,12 @@ public class GameController {
         if (player != null) {
             double distance = Math.sqrt(Math.pow(clientMessage.getMouseX() - player.getX(), 2) +
                     Math.pow(player.getY() - clientMessage.getMouseY(), 2));
-            int newX, newY;
-            newY = player.getY() - (int) Math.round(gameField.getSpeed() * (player.getY() - clientMessage.getMouseY()) / distance);
+            double newX, newY;
+            newY = player.getY() - gameField.getSpeed() * (player.getY() - clientMessage.getMouseY()) / distance;
             if ((newY >= 0) && (newY <= configurationService.getGameField().getHeight())) {
                 player.setY(newY);
             }
-            newX = player.getX() + (int) Math.round(gameField.getSpeed() * (clientMessage.getMouseX() - player.getX()) / distance);
+            newX = player.getX() + gameField.getSpeed() * (clientMessage.getMouseX() - player.getX()) / distance;
             if ((newX >= 0) && (newX <= configurationService.getGameField().getWidth())) {
                 player.setX(newX);
             }

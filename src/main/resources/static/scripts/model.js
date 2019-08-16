@@ -5,7 +5,6 @@ class Player {
     constructor(data) {
         this.name = data.name;
         this.color = data.color;
-        this.score = data.score;
         this.x = data.x;
         this.y = data.y;
         this.size = data.size;

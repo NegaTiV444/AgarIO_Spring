@@ -5,3 +5,12 @@ body{
     width: 100vw;
     overflow: hidden;
 }
+
+.leaderboard {
+    background-color: rgba(131, 124, 124, 0.7);
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    margin: 1vw;
+    right: 0;
+}

@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>agario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>agario</name>
 	<description>Simple implementation of Agar.io using Spring Framework</description>
 

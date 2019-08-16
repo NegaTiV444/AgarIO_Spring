@@ -23,7 +23,7 @@ public class GameLogicProvider {
         foodCost = config.getGameField().getFoodCost();
     }
 
-    public boolean isNear(GameEntity gameEntity, int x, int y) {
+    public boolean isNear(GameEntity gameEntity, double x, double y) {
         return ((Math.abs(gameEntity.getX() - x) < gameEntity.getSize() * 0.75)
                 && (Math.abs(gameEntity.getY() - y) < gameEntity.getSize() * 0.75));
     }
