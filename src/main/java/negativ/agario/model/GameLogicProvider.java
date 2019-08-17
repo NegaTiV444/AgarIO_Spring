@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,7 +44,7 @@ public class GameLogicProvider {
     }
 
     public void checkRecord(Player player) {
-        List<Record> records = recordRepository.findAllByOrderByScore();
+        List<Record> records = recordRepository.findAllByOrderByScoreDesc();
         if (records.size() == numberOfRecords) {
             if (records.get(numberOfRecords - 1).getScore() < player.getSize() * 10) {
                 recordRepository.delete(records.get(numberOfRecords - 1));

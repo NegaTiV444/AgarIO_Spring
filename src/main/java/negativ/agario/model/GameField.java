@@ -74,8 +74,7 @@ public class GameField {
                 Player secondPlayer = currentState.get(j);
                 if (gameLogicProvider.isNear(firstPlayer, secondPlayer.getX(), secondPlayer.getY())) {
                     gameLogicProvider.eatPlayer(firstPlayer, secondPlayer);
-                    gameLogicProvider.checkRecord(secondPlayer);
-                    players.remove(secondPlayer.getName());
+                    removePlayer(secondPlayer);
                     currentState.remove(secondPlayer);
                 } else
                     j++;
@@ -91,6 +90,11 @@ public class GameField {
             }
         }
         return currentState;
+    }
+
+    public void removePlayer(Player player) {
+        gameLogicProvider.checkRecord(player);
+        players.remove(player.getName());
     }
 
     public Map<String, Player> getPlayers() {

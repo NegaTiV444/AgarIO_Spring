@@ -33,6 +33,11 @@ function init() {
     connect();
 }
 
+window.onbeforeunload = function(){
+    stompClient.send("/game/quit", {}, JSON.stringify(
+        {name: name}));
+}
+
 function updateLeaders(players) {
     leaders.innerHTML = "";
     var len = players.length < 4 ? players.length : 3;
@@ -63,7 +68,6 @@ function redrawGameField(players, staticObjects) {
     score = currentPlayer.size * 10;
     camera.x = currentPlayer.x - visibleWidth / 2;
     camera.y = currentPlayer.y - visibleHeight / 2;
-    //currentPlayer.draw(ctx, visibleWidth / 2, visibleHeight / 2);
     players.forEach(item => {
         var player = new Player(item);
         player.draw(ctx, player.x - camera.x, player.y - camera.y);
@@ -80,21 +84,18 @@ function connect() {
     var socket = new SockJS('/game/subscription');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);
-    //event.preventDefault();
 }
 
 function onConnected() {
-    // Subscribe to the Public Topic
     console.log("Connection successful");
     subscription = stompClient.subscribe('/config', onConfigMessageReceived);
     name = prompt("Enter your name");
+    name = name.length === 0 ? "Anonymous" : name;
     stompClient.send("/game/add-user", {}, JSON.stringify({name: name}));
 }
 
 function onConfigMessageReceived(payload) {
     subscription.unsubscribe();
-    //if (!isConfigured) {
-    //    isConfigured = true;
         var message = JSON.parse(payload.body);
         gameFieldWidth = message.gameFieldWidth;
         gameFieldHeight = message.gameFieldHeight;
@@ -102,8 +103,6 @@ function onConfigMessageReceived(payload) {
         console.log("Configuration successful");
         stompClient.subscribe('/update', onMessageReceived);
         updateTimer = setInterval(sendUpdate, 10);
-    //}
-
 }
 
 function onError(error) {

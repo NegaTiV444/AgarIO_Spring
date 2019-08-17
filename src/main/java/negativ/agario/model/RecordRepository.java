@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RecordRepository extends CrudRepository<Record, String> {
 
-    List<Record> findAllByOrderByScore();
+    List<Record> findAllByOrderByScoreDesc();
 }

@@ -32,6 +32,9 @@ public class GameLogicProviderTest {
     @Mock
     private ConfigurationService.GameField gameFieldConfig;
 
+    @Mock
+    private ConfigurationService.Statistics statisticsConfig;
+
     private Player player = new Player();
 
     @BeforeClass
@@ -47,6 +50,8 @@ public class GameLogicProviderTest {
 
         Mockito.when(config.getGameField()).thenReturn(gameFieldConfig);
         Mockito.when(gameFieldConfig.getFoodCost()).thenReturn(0.5f);
+
+        Mockito.when(config.getStatistics()).thenReturn(statisticsConfig);
 
         //call post-constructor
         Method postConstruct =  GameLogicProvider.class.getDeclaredMethod("init",null); // methodName,parameters

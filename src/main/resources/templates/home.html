@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+>
 <head>
     <title>Agar.IO</title>
+    <link rel="stylesheet" type="text/css" href="styles/home.css">
 </head>
 <body>
-<h1>My Agar.IO implementation</h1>
-<a href="/game"><button>Play</button></a>
-<template id="record-item-template">
-    <div class="record" id="record">
-        <span class="name" id="name"></span>
-        <span class="score" id="score"></span>
-    </div>
-</template>
-<h2>Records</h2>
-<section class="records-list" id="records-list">
-</section>
+<main class="container">
+    <h1>AgarIO</h1>
+    <a class="border-animation" href="/game">
+        <div class="border-animation__inner">PLAY</div>
+    </a>
+    <template id="record-item-template">
+        <div class="record" id="record">
+            <span class="name" id="name"></span>
+            <span class="score" id="score"></span>
+        </div>
+    </template>
+    <h2>Records</h2>
+    <section class="records-list" id="records-list">
+    </section>
+</main>
 <script src="scripts/records.js"></script>
 </body>

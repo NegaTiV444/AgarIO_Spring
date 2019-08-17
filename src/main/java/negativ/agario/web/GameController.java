@@ -30,6 +30,12 @@ public class GameController {
         return "gameField";
     }
 
+    @MessageMapping("/quit")
+    private void handleQuit(ClientMessage message) {
+        gameField.removePlayer(gameField.getPlayers().get(message.getName()));
+        System.out.println("Player " + message.getName() + " left the game");
+    }
+
     @MessageMapping("/add-user")
     @SendTo("/config")
     private ConfigMessage handleAddUser(ClientMessage message) {

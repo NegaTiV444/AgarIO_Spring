@@ -22,7 +22,7 @@ function createRecordBlock(jsonData) {
         const item = recordItem.content.cloneNode(true).querySelector('.record');
         const child = fillTemplate(item, jsonData[i++]);
         recordBlock.appendChild(child);
-    })
+    });
     return recordBlock;
 }
 
