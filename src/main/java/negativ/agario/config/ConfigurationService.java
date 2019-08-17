@@ -16,6 +16,7 @@ public class ConfigurationService {
 
     private GameField gameField = new GameField();
     private Player player = new Player();
+    private Statistics statistics = new Statistics();
 
     @Data
     public static class GameField {
@@ -43,5 +44,9 @@ public class ConfigurationService {
         private List<String> availableColors = new ArrayList<>();
     }
 
-
+    @Data
+    public static class Statistics {
+        @NotNull
+        private Integer numberOfRecords;
+    }
 }

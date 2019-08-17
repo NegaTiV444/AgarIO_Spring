@@ -74,6 +74,7 @@ public class GameField {
                 Player secondPlayer = currentState.get(j);
                 if (gameLogicProvider.isNear(firstPlayer, secondPlayer.getX(), secondPlayer.getY())) {
                     gameLogicProvider.eatPlayer(firstPlayer, secondPlayer);
+                    gameLogicProvider.checkRecord(secondPlayer);
                     players.remove(secondPlayer.getName());
                     currentState.remove(secondPlayer);
                 } else

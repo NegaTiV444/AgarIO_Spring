@@ -43,7 +43,7 @@ public class UpdateScheduler {
         }
     }
 
-    @Scheduled(fixedDelay = 15)
+    @Scheduled(fixedDelay = 10)
     public void sendPlayersState() {
         List<Player> currentState = new ArrayList<>(gameField.updateAndGet()
                 .stream()

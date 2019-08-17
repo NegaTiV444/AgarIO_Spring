@@ -40,7 +40,7 @@ function updateLeaders(players) {
     while (i < len) {
         var li = document.createElement('li');
         var span = document.createElement('span');
-        span.textContent = players[len - i - 1].name + " : " + players[len - i - 1].size;
+        span.textContent = players[len - i - 1].name + " : " + players[len - i - 1].size * 10;
         li.appendChild(span);
         leaders.appendChild(li);
         i++;
@@ -92,17 +92,17 @@ function onConnected() {
 }
 
 function onConfigMessageReceived(payload) {
-    //subscription.unsubscribe();
-    if (!isConfigured) {
-        isConfigured = true;
+    subscription.unsubscribe();
+    //if (!isConfigured) {
+    //    isConfigured = true;
         var message = JSON.parse(payload.body);
         gameFieldWidth = message.gameFieldWidth;
         gameFieldHeight = message.gameFieldHeight;
         camera = new Camera(gameFieldWidth / 2, gameFieldHeight / 2);
         console.log("Configuration successful");
         stompClient.subscribe('/update', onMessageReceived);
-        updateTimer = setInterval(sendUpdate, 30);
-    }
+        updateTimer = setInterval(sendUpdate, 10);
+    //}
 
 }
 

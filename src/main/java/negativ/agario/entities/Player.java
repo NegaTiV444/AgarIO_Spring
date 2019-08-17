@@ -2,13 +2,9 @@ package negativ.agario.entities;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-
 @Data
 public class Player extends GameEntity {
 
-
-    @Id
     private String name;
 
 //    public boolean isNear(int x, int y) {
