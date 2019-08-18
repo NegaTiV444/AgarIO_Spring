@@ -9,15 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigMessage {
 
-    private ConfigurationService configurationService;
-
-    @Autowired
-    public ConfigMessage(ConfigurationService configurationService) {
-        this.configurationService = configurationService;
-        gameFieldWidth = configurationService.getGameField().getWidth();
-        gameFieldHeight = configurationService.getGameField().getHeight();
-    }
-
     private int gameFieldWidth;
     private int gameFieldHeight;
+    private boolean isOk;
+    private String name;
 }

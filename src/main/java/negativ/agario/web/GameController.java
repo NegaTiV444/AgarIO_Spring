@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GameController {
 
     @Autowired
-    private ConfigurationService configurationService;
+    private ConfigurationService config;
 
     @Autowired
     private GameField gameField;
-
-    @Autowired
-    private ConfigMessage configMessage;
 
     @GetMapping
     public String gameField() {
@@ -39,7 +36,17 @@ public class GameController {
     @MessageMapping("/add-user")
     @SendTo("/config")
     private ConfigMessage handleAddUser(ClientMessage message) {
-        gameField.addPlayer(message.getName());
+        ConfigMessage configMessage = new ConfigMessage();
+        String name = gameField.validateName(message.getName());
+        if (name.length() == 0) {
+            configMessage.setOk(false);
+        } else {
+            configMessage.setGameFieldHeight(config.getGameField().getHeight());
+            configMessage.setGameFieldWidth(config.getGameField().getWidth());
+            configMessage.setOk(true);
+            configMessage.setName(name);
+            gameField.addPlayer(configMessage.getName());
+        }
         return configMessage;
     }
 
@@ -51,11 +58,11 @@ public class GameController {
                     Math.pow(player.getY() - clientMessage.getMouseY(), 2));
             double newX, newY;
             newY = player.getY() - gameField.getSpeed() * (player.getY() - clientMessage.getMouseY()) / distance;
-            if ((newY >= 0) && (newY <= configurationService.getGameField().getHeight())) {
+            if ((newY >= 0) && (newY <= config.getGameField().getHeight())) {
                 player.setY(newY);
             }
             newX = player.getX() + gameField.getSpeed() * (clientMessage.getMouseX() - player.getX()) / distance;
-            if ((newX >= 0) && (newX <= configurationService.getGameField().getWidth())) {
+            if ((newX >= 0) && (newX <= config.getGameField().getWidth())) {
                 player.setX(newX);
             }
         }

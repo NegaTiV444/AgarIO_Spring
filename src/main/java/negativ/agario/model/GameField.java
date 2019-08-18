@@ -97,6 +97,27 @@ public class GameField {
         players.remove(player.getName());
     }
 
+    //returns empty string if the name is too long
+    public String validateName(String name) {
+        if (name == null && name.length() == 0)
+            name = "Anonymous";
+        if (name.length() < 16) {
+            if (players.containsKey(name)) {
+                return addNumberToName(name, 1);
+            } else
+                return name;
+        } else
+            return "";
+    }
+
+    private String addNumberToName(String name, int number) {
+        String newName = name + "(" + number + ")";
+        if (players.containsKey(newName)) {
+            return addNumberToName(name, number + 1);
+        } else
+            return newName;
+    }
+
     public Map<String, Player> getPlayers() {
         return players;
     }

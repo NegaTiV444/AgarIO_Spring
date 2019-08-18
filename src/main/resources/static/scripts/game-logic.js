@@ -89,20 +89,29 @@ function connect() {
 function onConnected() {
     console.log("Connection successful");
     subscription = stompClient.subscribe('/config', onConfigMessageReceived);
-    name = prompt("Enter your name");
+    var name = prompt("Enter your name");
     name = name.length === 0 ? "Anonymous" : name;
     stompClient.send("/game/add-user", {}, JSON.stringify({name: name}));
 }
 
 function onConfigMessageReceived(payload) {
-    subscription.unsubscribe();
         var message = JSON.parse(payload.body);
-        gameFieldWidth = message.gameFieldWidth;
-        gameFieldHeight = message.gameFieldHeight;
-        camera = new Camera(gameFieldWidth / 2, gameFieldHeight / 2);
-        console.log("Configuration successful");
-        stompClient.subscribe('/update', onMessageReceived);
-        updateTimer = setInterval(sendUpdate, 10);
+        console.log(message);
+        if  (message.ok == true) {
+            name = message.name;
+            subscription.unsubscribe();
+            gameFieldWidth = message.gameFieldWidth;
+            gameFieldHeight = message.gameFieldHeight;
+            camera = new Camera(gameFieldWidth / 2, gameFieldHeight / 2);
+            console.log("Configuration successful");
+            stompClient.subscribe('/update', onMessageReceived);
+            updateTimer = setInterval(sendUpdate, 10);
+        } else {
+            var newName = prompt("Enter another name (max 8 characters)");
+            newName = newName.length === 0 ? "Anonymous" : newName;
+            stompClient.send("/game/add-user", {}, JSON.stringify({name: newName}));
+        }
+
 }
 
 function onError(error) {
