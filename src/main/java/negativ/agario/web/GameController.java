@@ -1,10 +1,10 @@
 package negativ.agario.web;
 
-import negativ.agario.config.ConfigurationService;
-import negativ.agario.entities.Messages.ClientMessage;
-import negativ.agario.entities.Messages.ConfigMessage;
-import negativ.agario.entities.Player;
-import negativ.agario.model.GameField;
+import negativ.agario.configuration.ConfigurationService;
+import negativ.agario.data.entities.ClientMessage;
+import negativ.agario.data.entities.ConfigMessage;
+import negativ.agario.data.entities.Player;
+import negativ.agario.logic.GameField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

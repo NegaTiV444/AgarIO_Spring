@@ -1,6 +1,6 @@
-package negativ.agario.model;
+package negativ.agario.data;
 
-import negativ.agario.entities.Record;
+import negativ.agario.data.entities.Record;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

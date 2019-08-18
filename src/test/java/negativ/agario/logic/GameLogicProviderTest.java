@@ -1,16 +1,14 @@
-package negativ.agario.model;
+package negativ.agario.logic;
 
-import negativ.agario.config.ConfigurationService;
-import negativ.agario.entities.Player;
+import negativ.agario.configuration.ConfigurationService;
+import negativ.agario.data.entities.Player;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

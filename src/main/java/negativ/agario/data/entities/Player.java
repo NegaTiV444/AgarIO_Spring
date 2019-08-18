@@ -1,4 +1,4 @@
-package negativ.agario.entities;
+package negativ.agario.data.entities;
 
 import lombok.Data;
 

@@ -1,9 +1,10 @@
-package negativ.agario.model;
+package negativ.agario.logic;
 
-import negativ.agario.config.ConfigurationService;
-import negativ.agario.entities.GameEntity;
-import negativ.agario.entities.Player;
-import negativ.agario.entities.Record;
+import negativ.agario.configuration.ConfigurationService;
+import negativ.agario.data.RecordRepository;
+import negativ.agario.data.entities.GameEntity;
+import negativ.agario.data.entities.Player;
+import negativ.agario.data.entities.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,16 +45,17 @@ public class GameLogicProvider {
     }
 
     public void checkRecord(Player player) {
-        List<Record> records = recordRepository.findAllByOrderByScoreDesc();
-        if (records.size() == numberOfRecords) {
-            if (records.get(numberOfRecords - 1).getScore() < player.getSize() * 10) {
-                recordRepository.delete(records.get(numberOfRecords - 1));
+        if (player != null) {
+            List<Record> records = recordRepository.findAllByOrderByScoreDesc();
+            if (records.size() == numberOfRecords) {
+                if (records.get(numberOfRecords - 1).getScore() < player.getSize() * 10) {
+                    recordRepository.delete(records.get(numberOfRecords - 1));
+                    recordRepository.save(new Record(player.getName(), player.getSize() * 10));
+                }
+            } else {
                 recordRepository.save(new Record(player.getName(), player.getSize() * 10));
             }
-        } else {
-            recordRepository.save(new Record(player.getName(), player.getSize() * 10));
         }
-
     }
 
 }

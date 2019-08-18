@@ -1,8 +1,8 @@
-package negativ.agario.model;
+package negativ.agario.logic;
 
-import negativ.agario.config.ConfigurationService;
-import negativ.agario.entities.GameEntity;
-import negativ.agario.entities.Player;
+import negativ.agario.configuration.ConfigurationService;
+import negativ.agario.data.entities.GameEntity;
+import negativ.agario.data.entities.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +61,7 @@ public class GameField {
         } while (players.values().stream().anyMatch(p -> gameLogicProvider.isNear(p, player.getX(), player.getY())));
     }
 
-    public List<Player> updateAndGet() { //TODO Check time and choose the fastest way
+    public List<Player> updateAndGet() { //TODO improve update logic
         List<Player> currentState = new ArrayList<>(players
                 .values()
                 .stream()

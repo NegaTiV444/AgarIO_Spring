@@ -1,9 +1,9 @@
-package negativ.agario.model;
+package negativ.agario.logic;
 
-import negativ.agario.config.ConfigurationService;
-import negativ.agario.entities.GameEntity;
-import negativ.agario.entities.Messages.ServerMessage;
-import negativ.agario.entities.Player;
+import negativ.agario.configuration.ConfigurationService;
+import negativ.agario.data.entities.GameEntity;
+import negativ.agario.data.entities.Player;
+import negativ.agario.data.entities.ServerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;

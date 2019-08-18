@@ -1,8 +1,6 @@
-package negativ.agario.entities.Messages;
+package negativ.agario.data.entities;
 
 import lombok.Data;
-import negativ.agario.entities.GameEntity;
-import negativ.agario.entities.Player;
 
 import java.util.List;
 

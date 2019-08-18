@@ -55,10 +55,6 @@ function updateLeaders(players) {
 function redrawGameField(players, staticObjects) {
     ctx.clearRect(0, 0, visibleWidth, visibleHeight);
     var data = players.filter(player => player.name === name)[0];
-    staticObjects.forEach(item => {
-        var staticObject = new StaticObject(item);
-        staticObject.draw(ctx, staticObject.x - camera.x, staticObject.y - camera.y);
-    });
     if (data == null) {
         alert("You lose. Your score is " + score);
         location = "/home";
@@ -68,6 +64,10 @@ function redrawGameField(players, staticObjects) {
     score = currentPlayer.size * 10;
     camera.x = currentPlayer.x - visibleWidth / 2;
     camera.y = currentPlayer.y - visibleHeight / 2;
+    staticObjects.forEach(item => {
+        var staticObject = new StaticObject(item);
+        staticObject.draw(ctx, staticObject.x - camera.x, staticObject.y - camera.y);
+    });
     players.forEach(item => {
         var player = new Player(item);
         player.draw(ctx, player.x - camera.x, player.y - camera.y);
