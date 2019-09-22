@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>agario</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>1.0.0-RELEASE</version>
 	<packaging>jar</packaging>
 	<name>agario</name>
 	<description>Simple implementation of Agar.io using Spring Framework</description>

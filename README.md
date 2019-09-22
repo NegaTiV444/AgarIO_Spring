@@ -1,2 +1,8 @@
 # AgarIO_Spring
-Implementation of AgarIO using Spring Framework
+Deployment:
+
+- $ git clone https://github.com/NegaTiV444/AgarIO_Spring
+
+- $ cd AgarIO_Spring
+- $ chmod +x deploy.sh
+- $ ./deploy.sh

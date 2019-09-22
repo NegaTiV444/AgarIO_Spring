@@ -17,9 +17,10 @@ services:
 
   agario-app:
     image: negativ444/agario-maven
-    command: java -jar -Dspring.profiles.active=prod /app/target/agario-0.0.2-SNAPSHOT.jar
+    command: java -jar -Dspring.profiles.active=prod /app/target/agario-1.0.0-RELEASE.jar
     depends_on:
       - mysql
+    restart: on-failure
     networks:
       - frontend
       - backend
